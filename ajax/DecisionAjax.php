@@ -17,7 +17,26 @@ class DecisionAjax {
     }
 
     public function getCumplimientoPorFecha($datos) {
-        $respuesta = DecisionModel::getCumplimientoPorFecha($datos);
+        $respuesta = new stdClass();
+        $respuesta->cumplimientoPorFecha = DecisionModel::getCumplimientoPorFecha($datos);
+        $respuesta->sectorCumplimientoPorFecha = DecisionModel::getSectorCumplimientoPorFecha($datos);
+
+        if($datos->sector == 0) {
+            $respuesta->sectoresList = DecisionModel::getSectoresPorRango($datos);
+        } else {
+            $sectores = explode(",", $datos->sector);
+
+            $tempSector = array();
+            foreach($sectores as $index => $key) {
+                 $datos->sector = $key;
+                 $resultado = DecisionModel::getCumplimientoPorMesCliente($datos);
+
+                 array_push($tempSector, $resultado);
+            }
+            $respuesta->cumplimientoPorMesCliente = $tempSector;
+        }
+
+
         echo json_encode($respuesta);
     }
 }

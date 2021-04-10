@@ -86,13 +86,13 @@
             <h5>Analisis y causa</h5>
         </div>
         <!-- Info boxes -->
-        <div class="row mt-3">
+        <div class="row mt-3 p-3">
             <div class="col-12 col-sm-6 col-md-3">
                 <div class="info-box">
                     <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cog"></i></span>
 
                     <div class="info-box-content">
-                        <span class="info-box-text">CPU Traffic</span>
+                        <span class="info-box-text">Plantas procesadoras activas</span>
                         <span class="info-box-number">
                             10
                             <small>%</small>
@@ -108,7 +108,7 @@
                     <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-thumbs-up"></i></span>
 
                     <div class="info-box-content">
-                        <span class="info-box-text">Likes</span>
+                        <span class="info-box-text">Atrasos registrados</span>
                         <span class="info-box-number">41,410</span>
                     </div>
                     <!-- /.info-box-content -->
@@ -116,7 +116,6 @@
                 <!-- /.info-box -->
             </div>
             <!-- /.col -->
-
             <!-- fix for small devices only -->
             <div class="clearfix hidden-md-up"></div>
 
@@ -125,7 +124,7 @@
                     <span class="info-box-icon bg-success elevation-1"><i class="fas fa-shopping-cart"></i></span>
 
                     <div class="info-box-content">
-                        <span class="info-box-text">Sales</span>
+                        <span class="info-box-text">Ventas</span>
                         <span class="info-box-number">760</span>
                     </div>
                     <!-- /.info-box-content -->
@@ -138,7 +137,7 @@
                     <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
 
                     <div class="info-box-content">
-                        <span class="info-box-text">New Members</span>
+                        <span class="info-box-text">Clientes</span>
                         <span class="info-box-number">2,000</span>
                     </div>
                     <!-- /.info-box-content -->
@@ -146,14 +145,33 @@
                 <!-- /.info-box -->
             </div>
             <!-- /.col -->
+            <div class="col-md-4">
+                <p class="text-center">
+                    <strong>Cumplimiento por Sector</strong>
+                </p>
+                <div id="cumplimiento">
+                </div>
+                <!-- /.progress-group -->
+            </div>
+            <div class="col-md-8">
+                <p class="text-center">
+                    <strong>Sales: <span id="fechaGrafico"></span></strong>
+                </p>
+
+                <div class="chart">
+                    <canvas id="salesChart" height="180" style="height: 180px;"></canvas>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 </div>
 
+
 <!-- SCRIPT PERSONAL -->
 <script src="views/assets/js/decision.js"></script>
-<!-- DataTables  & Plugins -->
+<!-- ChartJS -->
+<script src="views/assets/plugins/chart.js/Chart.min.js"></script>
 
 <script>
     $(function() {
