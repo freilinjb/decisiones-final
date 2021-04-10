@@ -4,7 +4,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>Reporte de decisiones</h1>
+                <h1>Reporte para el apoyo a la toma de decisiones</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -24,58 +24,61 @@
             <h3 class="card-title">Reporte de analisis de senbilidad</h3>
         </div>
         <div class="card-body">
-            <div class="row">
-                <div class="form-group col-3">
-                    <label>Date range:</label>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">
-                                <i class="far fa-calendar-alt"></i>
-                            </span>
+            <form class="row" id="formulario">
+                    <div class="form-group col-3">
+                        <label>Date range:</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="far fa-calendar-alt"></i>
+                                </span>
+                            </div>
+                            <input type="text" class="form-control" id="fechaRango">
+
                         </div>
-                        <input type="text" class="form-control" id="reservation">
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Sector</label>
+                            <select class="select2bs4" id="sector" multiple="multiple" data-placeholder="Seleccionar el sector" style="width: 100%;">
+                                <?php
+                                $sector = DecisionController::sectores(null, null);
+                                foreach ($sector as $value) {
+                                    echo "<option value=" . $value["idSector"] . ">" . $value["descripcion"] . "</option>";
+                                }
+                                ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Planta</label>
+                            <select class="select2bs4" id="planta" multiple="multiple" data-placeholder="Seleccionar la Plata" style="width: 100%;">
+                                <?php
+                                $sector = DecisionController::plantas(null, null);
+                                foreach ($sector as $value) {
+                                    echo "<option value=" . $value["idPlanta"] . ">" . $value["descripcion"] . "</option>";
+                                }
+                                ?>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- /.form-group -->
+                    <div class="col-3" style="margin-top: 32px">
+                        <div class="btn-group float-right" role="group" aria-label="Button group">
+                            <button type="button" id="btnBuscar" class="btn btn-primary float-right">
+                                <li class="fa fa-search"></li> Buscar
+                            </button>
+                            <button type="button" class="btn btn-secondary float-right">
+                                <li class="fa fa-print"></li> Imprimir
+                            </button>
+                            <button type="button" class="btn btn-warning float-right">
+                                <li class="fa fa-trash"></li> Limpiar
+                            </button>
+                        </div>
 
                     </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label>Sector</label>
-                        <select class="select2bs4" multiple="multiple" data-placeholder="Select a State" style="width: 100%;">
-                            <option>Alabama</option>
-                            <option>Alaska</option>
-                            <option>California</option>
-                            <option>Delaware</option>
-                            <option>Tennessee</option>
-                            <option>Texas</option>
-                            <option>Washington</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label>Planta</label>
-                        <select class="select2bs4" multiple="multiple" data-placeholder="Select a State" style="width: 100%;">
-                            <option>Alabama</option>
-                            <option>Alaska</option>
-                            <option>California</option>
-                            <option>Delaware</option>
-                            <option>Tennessee</option>
-                            <option>Texas</option>
-                            <option>Washington</option>
-                        </select>
-                    </div>
-                </div>
-                <!-- /.form-group -->
-                <div class="col-3" style="margin-top: 32px">
-                    <div class="btn-group float-right" role="group" aria-label="Button group">
-                        <button type="button" class="btn btn-primary float-right">  <li class="fa fa-search"></li> Buscar</button>
-                        <button type="button" class="btn btn-secondary float-right">  <li class="fa fa-print"></li> Imprimir</button>
-                        <button type="button" class="btn btn-warning float-right">  <li class="fa fa-trash"></li> Limpiar</button>
-                    </div>
-                    
-                </div>
-                
-            </div>
+            </form>
         </div>
         <hr>
         <div class="col-12 text-center p-2 bg-secondary shadow">
@@ -84,71 +87,73 @@
         </div>
         <!-- Info boxes -->
         <div class="row mt-3">
-          <div class="col-12 col-sm-6 col-md-3">
-            <div class="info-box">
-              <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cog"></i></span>
+            <div class="col-12 col-sm-6 col-md-3">
+                <div class="info-box">
+                    <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cog"></i></span>
 
-              <div class="info-box-content">
-                <span class="info-box-text">CPU Traffic</span>
-                <span class="info-box-number">
-                  10
-                  <small>%</small>
-                </span>
-              </div>
-              <!-- /.info-box-content -->
+                    <div class="info-box-content">
+                        <span class="info-box-text">CPU Traffic</span>
+                        <span class="info-box-number">
+                            10
+                            <small>%</small>
+                        </span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
             </div>
-            <!-- /.info-box -->
-          </div>
-          <!-- /.col -->
-          <div class="col-12 col-sm-6 col-md-3">
-            <div class="info-box mb-3">
-              <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-thumbs-up"></i></span>
+            <!-- /.col -->
+            <div class="col-12 col-sm-6 col-md-3">
+                <div class="info-box mb-3">
+                    <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-thumbs-up"></i></span>
 
-              <div class="info-box-content">
-                <span class="info-box-text">Likes</span>
-                <span class="info-box-number">41,410</span>
-              </div>
-              <!-- /.info-box-content -->
+                    <div class="info-box-content">
+                        <span class="info-box-text">Likes</span>
+                        <span class="info-box-number">41,410</span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
             </div>
-            <!-- /.info-box -->
-          </div>
-          <!-- /.col -->
+            <!-- /.col -->
 
-          <!-- fix for small devices only -->
-          <div class="clearfix hidden-md-up"></div>
+            <!-- fix for small devices only -->
+            <div class="clearfix hidden-md-up"></div>
 
-          <div class="col-12 col-sm-6 col-md-3">
-            <div class="info-box mb-3">
-              <span class="info-box-icon bg-success elevation-1"><i class="fas fa-shopping-cart"></i></span>
+            <div class="col-12 col-sm-6 col-md-3">
+                <div class="info-box mb-3">
+                    <span class="info-box-icon bg-success elevation-1"><i class="fas fa-shopping-cart"></i></span>
 
-              <div class="info-box-content">
-                <span class="info-box-text">Sales</span>
-                <span class="info-box-number">760</span>
-              </div>
-              <!-- /.info-box-content -->
+                    <div class="info-box-content">
+                        <span class="info-box-text">Sales</span>
+                        <span class="info-box-number">760</span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
             </div>
-            <!-- /.info-box -->
-          </div>
-          <!-- /.col -->
-          <div class="col-12 col-sm-6 col-md-3">
-            <div class="info-box mb-3">
-              <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
+            <!-- /.col -->
+            <div class="col-12 col-sm-6 col-md-3">
+                <div class="info-box mb-3">
+                    <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
 
-              <div class="info-box-content">
-                <span class="info-box-text">New Members</span>
-                <span class="info-box-number">2,000</span>
-              </div>
-              <!-- /.info-box-content -->
+                    <div class="info-box-content">
+                        <span class="info-box-text">New Members</span>
+                        <span class="info-box-number">2,000</span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
             </div>
-            <!-- /.info-box -->
-          </div>
-          <!-- /.col -->
+            <!-- /.col -->
         </div>
     </div>
 </div>
 </div>
 
-
+<!-- SCRIPT PERSONAL -->
+<script src="views/assets/js/decision.js"></script>
+<!-- DataTables  & Plugins -->
 
 <script>
     $(function() {
@@ -172,6 +177,8 @@
         $('[data-mask]').inputmask()
 
         //Date range picker
-        $('#reservation').daterangepicker();
+        $('#fechaRango').daterangepicker({
+            dateFormat: 'yy-mm-dd' 
+        });
     });
 </script>

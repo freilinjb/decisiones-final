@@ -16,7 +16,7 @@
                         <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
                         <li class="nav-item">
-                            <a href="homes" <?php if($_GET['route']=="homes") { ?> class="nav-link active" <?php }  else{ ?> class="nav-link" <?php } ?>>
+                            <a href="home" <?php if($_GET['route']=="home") { ?> class="nav-link active" <?php }  else{ ?> class="nav-link" <?php } ?>>
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
                                     Dashboard

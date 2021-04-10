@@ -52,7 +52,7 @@ $(function () {
 
         $.ajax({
           url: "ajax/SimulacionAjax.php",
-          method: "POST",
+          method: "GET",
           data: dato,
           cache: false,
           contentType: false,
@@ -134,7 +134,6 @@ $(function () {
               }
             },
           });
-          // Swal.fire("Deleted!", "Se ha eliminado.", "success");
       }
     });
   });
