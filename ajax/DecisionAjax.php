@@ -21,20 +21,29 @@ class DecisionAjax {
         $respuesta->cumplimientoPorFecha = DecisionModel::getCumplimientoPorFecha($datos);
         $respuesta->sectorCumplimientoPorFecha = DecisionModel::getSectorCumplimientoPorFecha($datos);
 
+        $tempIdSectorList = '';
         if($datos->sector == 0) {
-            $respuesta->sectoresList = DecisionModel::getSectoresPorRango($datos);
-        } else {
-            $sectores = explode(",", $datos->sector);
-
-            $tempSector = array();
-            foreach($sectores as $index => $key) {
-                 $datos->sector = $key;
-                 $resultado = DecisionModel::getCumplimientoPorMesCliente($datos);
-
-                 array_push($tempSector, $resultado);
+            $sectoresList = DecisionModel::getSectoresPorRango($datos);
+            $tempIdSectorList = "";
+            
+            foreach($sectoresList as $index => $key) {
+                $tempIdSectorList .= $index == 0 ?  $key["idSector"] : ",". $key["idSector"] ."";
             }
-            $respuesta->cumplimientoPorMesCliente = $tempSector;
+            $tempIdSectorList = explode(",",  $tempIdSectorList);
+
+        } else {
+            $tempIdSectorList = explode(",", $datos->sector);
         }
+        
+        $tempSector = array();
+        foreach($tempIdSectorList as $index => $key) {
+             $datos->sector = $key;
+             $resultado = DecisionModel::getCumplimientoPorMesCliente($datos);
+
+             array_push($tempSector, $resultado);
+        }
+
+        $respuesta->cumplimientoPorMesCliente = $tempSector;
 
 
         echo json_encode($respuesta);
