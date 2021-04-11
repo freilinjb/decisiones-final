@@ -16,8 +16,6 @@ $(function () {
     fecha[0] = formatoFecha(fecha[0]);
     fecha[1] = formatoFecha(fecha[1]);
    
-    console.log("fecha: ", fecha);
-
     const dato = new FormData();
 
     dato.append("exec", "getCumplimientoPorFecha");
@@ -45,10 +43,92 @@ $(function () {
         if(respuesta.sectorCumplimientoPorFecha.length > 0) {
             construirCumplimientoPorSector(respuesta.sectorCumplimientoPorFecha);
         }
-        console.log(respuesta);
+        if(respuesta.cumplimientoPorMesCliente.length > 0) {
+          cumplimientoPorMesCliente(respuesta.cumplimientoPorMesCliente);
+        }
       },
     });
   });
+
+  const cumplimientoPorMesCliente = (respuesta) => {
+    if(respuesta.length == 0) {
+      return;
+    }
+
+    datasets = [];
+    tempMeses = [];
+
+    respuesta.forEach((key, index) => {
+      console.log('key: ', key);
+
+      tempValores = [];
+
+      key.forEach(element => {
+        tempValores.push(element.cumplimiento);
+        if (!tempMeses.includes(element.mes))
+          tempMeses.push(element.mes);
+       //tempMeses.push(element.mes);
+      });
+
+      console.log('cumplimitno: ', index);
+      pointColor = ["#3b8bba", "#C7B04A","#C77149","#c1c7d1","#5124B2","#B5CE9B","#9CDCFE","#658FA6"];
+      backgroundColor = ["rgba(210, 214, 222, 1)", "rgba(60,141,188,0.9)","rgba(101, 143, 166, 0.8)","rgba(156, 220, 255,0.7)","rgba(60,141,188,0.9)","rgba(60,141,188,0.9)","rgba(60,141,188,0.9)","rgba(60,141,188,0.9)"];
+      
+      datasets.push({
+        label               : key[0].sector,
+        backgroundColor     : `${backgroundColor[index]}`,
+        borderColor         : `${backgroundColor[index]}`,
+        pointRadius          : true,
+        pointColor          : `${pointColor[index]}`,
+        pointStrokeColor    : `${backgroundColor[index]}`,
+        pointHighlightFill  : '#fff',
+        pointHighlightStroke: `${backgroundColor[index]}`,
+        data                : tempValores,
+      })
+    });
+
+    console.log('datasets: ', datasets);
+    console.log('tempMeses: ', tempMeses);
+
+    
+
+      // Get context with jQuery - using jQuery's .get() method.
+  var salesChartCanvas = $('#salesChart').get(0).getContext('2d')
+
+  var salesChartData = {
+    labels  : tempMeses,
+    datasets
+  }
+
+        ///INICIO DEL GRAFICO
+        var salesChartOptions = {
+            maintainAspectRatio : true,
+            responsive : true,
+            legend: {
+            display: true
+            },
+            scales: {
+            xAxes: [{
+                gridLines : {
+                display : true,
+                }
+            }],
+            yAxes: [{
+                gridLines : {
+                display : true,
+                }
+            }]
+            }
+        }
+
+        // This will get the first returned node in the jQuery collection.
+        var salesChart = new Chart(salesChartCanvas, { 
+            type: 'bar', 
+            data: salesChartData, 
+            options: salesChartOptions
+            }
+        );
+  }
 
   const construirCumplimientoPorSector =(respuesta) => {
       let html = '';
@@ -64,73 +144,9 @@ $(function () {
                     </div>
                 </div>`;
 
-        console.log('index: ', index);
     });
 
-
-
-      // Get context with jQuery - using jQuery's .get() method.
-  var salesChartCanvas = $('#salesChart').get(0).getContext('2d')
-
-  var salesChartData = {
-    labels  : ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-    datasets: [
-      {
-        label               : 'Digital Goods',
-        backgroundColor     : 'rgba(60,141,188,0.9)',
-        borderColor         : 'rgba(60,141,188,0.8)',
-        pointRadius          : false,
-        pointColor          : '#3b8bba',
-        pointStrokeColor    : 'rgba(60,141,188,1)',
-        pointHighlightFill  : '#fff',
-        pointHighlightStroke: 'rgba(60,141,188,1)',
-        data                : [28, 48, 40, 19, 86, 27, 90]
-      },
-      {
-        label               : 'Electronics',
-        backgroundColor     : 'rgba(210, 214, 222, 1)',
-        borderColor         : 'rgba(210, 214, 222, 1)',
-        pointRadius         : false,
-        pointColor          : 'rgba(210, 214, 222, 1)',
-        pointStrokeColor    : '#c1c7d1',
-        pointHighlightFill  : '#fff',
-        pointHighlightStroke: 'rgba(220,220,220,1)',
-        data                : [65, 59, 80, 81, 56, 55, 40]
-      },
-    ]
-  }
-
-        ///INICIO DEL GRAFICO
-
-        var salesChartOptions = {
-            maintainAspectRatio : false,
-            responsive : true,
-            legend: {
-            display: false
-            },
-            scales: {
-            xAxes: [{
-                gridLines : {
-                display : false,
-                }
-            }],
-            yAxes: [{
-                gridLines : {
-                display : false,
-                }
-            }]
-            }
-        }
-
-        // This will get the first returned node in the jQuery collection.
-        var salesChart = new Chart(salesChartCanvas, { 
-            type: 'line', 
-            data: salesChartData, 
-            options: salesChartOptions
-            }
-        )
-
-        $("#fechaGrafico").html($("#fechaRango").val());
+    $("#fechaGrafico").html($("#fechaRango").val());
 
         ///FIN DEL GRAFICO
     $("#cumplimiento").html(html);
