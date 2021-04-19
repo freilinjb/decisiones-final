@@ -31,64 +31,6 @@
                                         <p>Consultar informes</p>
                                     </a>
                                 </li>
-                                <li class="nav-item">
-                                    <a href="reportePersonalizado" <?php if($_GET['route']=="reportePersonalizado") { ?> class="nav-link active" <?php }  else{ ?> class="nav-link" <?php } ?>>
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Custom Report</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                <a href="eventos" <?php if($_GET['route']=="eventos") { ?> class="nav-link active" <?php }  else{ ?> class="nav-link" <?php } ?>>
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Administrador de eventos</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-tree"></i>
-                                <p>
-                                    Simulacion digital
-                                    <i class="fas fa-angle-left right"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                <a href="analisis" <?php if($_GET['route']=="analisis") { ?> class="nav-link active" <?php }  else{ ?> class="nav-link" <?php } ?>>
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Analisis</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="conclusion" <?php if($_GET['route']=="conclusion") { ?> class="nav-link active" <?php }  else{ ?> class="nav-link" <?php } ?>>
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Conclusion</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-tree"></i>
-                                <p>
-                                    Logistica
-                                    <i class="fas fa-angle-left right"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="../UI/general.html" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>General</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="../UI/icons.html" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Icons</p>
-                                    </a>
-                                </li>
                             </ul>
                         </li>
                     </ul>
