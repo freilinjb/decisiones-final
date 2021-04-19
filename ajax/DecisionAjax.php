@@ -35,6 +35,13 @@ class DecisionAjax {
             $tempIdSectorList = explode(",", $datos->sector);
         }
         
+        /**
+         * Consultas los problemas encontrados en el rango de fecha establecidos
+         */
+        $respuesta->getProblemasOcurridos = DecisionModel::getProblemasOcurridos($datos);
+        $respuesta->getCausasEncontradas = DecisionModel::getCausasEncontradas($datos);
+        $respuesta->getRelacionPlantaCausas = DecisionModel::getRelacionPlantaCausas($datos);
+        
         $tempSector = array();
         foreach($tempIdSectorList as $index => $key) {
              $datos->sector = $key;
@@ -72,6 +79,8 @@ if (isset($_POST['exec']) && !empty($_POST['exec'])) {
             $data->fechaFinal = $_POST["fechaFinal"];
             $data->sector = $_POST["sector"];
             $data->planta = $_POST["planta"];
+
+            //print_r($data);
             $ejecutar->getCumplimientoPorFecha($data);
             break;
     }

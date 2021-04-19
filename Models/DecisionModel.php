@@ -114,4 +114,72 @@ class DecisionModel
         $respuesta->execute();
         return $respuesta->fetchAll();
     }
+
+    static public function getProblemasOcurridos($datos)
+    {
+       // print_r($datos);
+        //die;
+        $condicion = ($datos->sector != "0") ? " AND s.idSector IN ( $datos->sector ) " : "";
+        $condicion .= ($datos->planta != "0") ? " AND p.idPlanta IN ( $datos->planta )" : "";
+
+        
+        $sql = "SELECT a.*,ROUND((a.duracion/22)*100,2) AS porcentaje_perdida
+                FROM (
+                    SELECT t.idProblema,p1.descripcion AS problema, ROUND(TIMESTAMPDIFF(MINUTE,t.fechaFin,  t.fechaInicio)/60,2) AS duracion,t.meta  FROM tiempoproduccion t
+                        INNER JOIN planta p ON p.idPlanta = t.idPlanta 
+                        INNER JOIN sector s ON s.idSector = p.idSector
+                        INNER JOIN problema p1 ON p1.idProblema = t.idProblema
+                        WHERE UNIX_TIMESTAMP(t.fechaInicio) BETWEEN UNIX_TIMESTAMP('" . $datos->fechaInicio . "') AND UNIX_TIMESTAMP('" . $datos->fechaFinal . "') $condicion
+                    GROUP BY 1 
+                    ORDER BY 1
+                ) AS a;
+            ";
+
+        // echo "$sql";
+        //             die;
+        $respuesta = Conection::connect()->prepare($sql);
+        $respuesta->execute();
+        return $respuesta->fetchAll();
+    }
+
+    static public function getCausasEncontradas($datos)
+    {
+        $condicion = ($datos->sector != "0") ? " AND s.idSector IN ( $datos->sector ) " : "";
+        $condicion .= ($datos->planta != "0") ? " AND p.idPlanta IN ( $datos->planta )" : "";
+
+        
+        $sql = "SELECT c1.descripcion AS causa, COUNT(c1.idCauda) AS cantidad FROM tiempoproduccion t
+                    INNER JOIN  consecuencia c ON c.idConsecuencia = t.idConsecuencia
+                    INNER JOIN planta p ON p.idPlanta = t.idPlanta 
+                    INNER JOIN sector s ON s.idSector = p.idSector
+                    INNER JOIN causa c1 ON c1.idCauda = t.idCausa
+                WHERE UNIX_TIMESTAMP(t.fechaInicio) BETWEEN UNIX_TIMESTAMP('" . $datos->fechaInicio . "') AND UNIX_TIMESTAMP('" . $datos->fechaFinal . "') $condicion
+                GROUP BY 1
+            ";
+
+        $respuesta = Conection::connect()->prepare($sql);
+        $respuesta->execute();
+        return $respuesta->fetchAll();
+    }
+
+    static public function getRelacionPlantaCausas($datos)
+    {
+        $condicion = ($datos->sector != "0") ? " AND s.idSector IN ( $datos->sector ) " : "";
+        $condicion .= ($datos->planta != "0") ? " AND p.idPlanta IN ( $datos->planta )" : "";
+
+        
+        $sql = "SELECT p.descripcion AS planta, c1.descripcion AS causa, p1.descripcion AS problema,  COUNT(c1.idCauda) AS cantidad, DATE_FORMAT(t.fechaInicio, '%m/%d/%Y') AS date  FROM tiempoproduccion t
+                    INNER JOIN  consecuencia c ON c.idConsecuencia = t.idConsecuencia
+                    INNER JOIN planta p ON p.idPlanta = t.idPlanta 
+                    INNER JOIN sector s ON s.idSector = p.idSector
+                    INNER JOIN causa c1 ON c1.idCauda = t.idCausa
+                    INNER JOIN problema p1 ON p1.idProblema = t.idProblema
+                WHERE UNIX_TIMESTAMP(t.fechaInicio) BETWEEN UNIX_TIMESTAMP('" . $datos->fechaInicio . "') AND UNIX_TIMESTAMP('" . $datos->fechaFinal . "') $condicion
+                GROUP BY 1,2,3
+            ";
+
+        $respuesta = Conection::connect()->prepare($sql);
+        $respuesta->execute();
+        return $respuesta->fetchAll();
+    }
 }

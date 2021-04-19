@@ -1,5 +1,5 @@
         <!-- Main Sidebar Container -->
-        <aside class="main-sidebar main-sidebar-custom sidebar-dark-primary elevation-4" style="">
+        <aside class="main-sidebar main-sidebar-custom sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
             <a href="views/assets/index3.html" class="brand-link">
                 <img src="https://pbs.twimg.com/profile_images/1002942670233145345/EgCJ-JK1_400x400.jpg" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
@@ -24,24 +24,17 @@
                             </a>
                         </li>
                         <li class="nav-item menu-open">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-chart-pie"></i>
-                                <p>
-                                    Admin estadistica
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="demandas" <?php if($_GET['route']=="demandas") { ?> class="nav-link active" <?php }  else{ ?> class="nav-link" <?php } ?>>
+                                    <a href="decision" <?php if($_GET['route']=="decision") { ?> class="nav-link active" <?php }  else{ ?> class="nav-link" <?php } ?>>
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Registro de demanda</p>
+                                        <p>Consultar informes</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="productos" <?php if($_GET['route']=="productos") { ?> class="nav-link active" <?php }  else{ ?> class="nav-link" <?php } ?>>
+                                    <a href="reportePersonalizado" <?php if($_GET['route']=="reportePersonalizado") { ?> class="nav-link active" <?php }  else{ ?> class="nav-link" <?php } ?>>
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Administrador de producto</p>
+                                        <p>Custom Report</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
